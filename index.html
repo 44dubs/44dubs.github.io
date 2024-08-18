@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>44dubs</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            object-fit: cover;
+        }
+        .dot-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, #000 1px, transparent 1px);
+            background-size: 2px 2px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        .centered-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 40%;
+            max-height: 40%;
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" loop muted playsinline preload="auto">
+        <source src="background_fallback.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="dot-overlay"></div>
+    
+    <img src="logo.png" alt="Centered Logo" class="centered-image" loading="lazy">
+
+    <script>
+    (function() {
+        var video = document.getElementById('video-background');
+        
+        function loadVideo() {
+            if (video.canPlayType('video/mp4; codecs=av01.0.05M.08')) {
+                video.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">';
+            }
+            video.load();
+            video.play().catch(function(error) {
+                console.log("Auto-play was prevented:", error);
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadVideo);
+        } else {
+            loadVideo();
+        }
+    })();
+    </script>
+</body>
+</html>
