@@ -23,7 +23,7 @@
          height: 100%;
          overflow: hidden;
          }
-         #video-background {
+         #video-background, #gif-background {
          position: fixed;
          right: 0;
          bottom: 0;
@@ -33,6 +33,7 @@
          height: 100%;
          z-index: -2;
          object-fit: cover;
+         display: none;
          }
          .dot-overlay {
          position: fixed;
@@ -88,6 +89,7 @@
       <video id="video-background" loop muted playsinline preload="auto">
          <source src="background_fallback.mp4" type="video/mp4">
       </video>
+      <img id="gif-background" src="background_fallback.gif" alt="Background GIF">
       <audio id="background-audio" loop preload="auto">
          <source src="background_audio.mp3" type="audio/mpeg">
       </audio>
@@ -97,30 +99,47 @@
       <script async>
          !(function () {
             var v = document.getElementById("video-background"),
+                g = document.getElementById("gif-background"),
                 a = document.getElementById("background-audio"),
                 b = document.getElementById("audio-button");
-         
+
+            function useGifFallback() {
+                v.style.display = 'none';
+                g.style.display = 'block';
+            }
+
             function n() {
-                // Set video source if codec is supported
-                v.canPlayType("video/mp4; codecs=av01.0.05M.08") && (v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">');
-         
-                v.load();
-                
-                // Play the video and set it to a random start time
-                v.addEventListener('loadedmetadata', function() {
-                    var randomTime = Math.random() * v.duration;
-                    v.currentTime = randomTime;
-                    v.play().catch(function (e) {
-                        console.log("Video auto-play was prevented:", e);
+                if (v.canPlayType) {
+                    // Set video source if codec is supported
+                    if (v.canPlayType("video/mp4; codecs=av01.0.05M.08")) {
+                        v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">';
+                    }
+
+                    v.load();
+
+                    // Play the video and set it to a random start time
+                    v.addEventListener('loadedmetadata', function() {
+                        var randomTime = Math.random() * v.duration;
+                        v.currentTime = randomTime;
+                        v.play().catch(function (e) {
+                            console.log("Video auto-play was prevented:", e);
+                            useGifFallback();
+                        });
                     });
-                });
-         
+
+                    v.style.display = 'block';
+                } else {
+                    useGifFallback();
+                }
+
                 // Set audio source if codec is supported
-                a.canPlayType("audio/ogg; codecs=opus") && (a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">');
+                if (a.canPlayType("audio/ogg; codecs=opus")) {
+                    a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">';
+                }
                 a.volume = 0.2;
                 a.load();
             }
-         
+
             // Audio button click event
             b.addEventListener("click", function() {
                 a.play().catch(function (e) {
@@ -128,9 +147,13 @@
                 });
                 b.style.display = 'none';
             });
-         
+
             // Check if the document is loading and execute the function
-            "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", n) : n();
+            if ("loading" === document.readyState) {
+                document.addEventListener("DOMContentLoaded", n);
+            } else {
+                n();
+            }
          })();
       </script>
    </body>
