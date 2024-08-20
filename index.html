@@ -33,22 +33,19 @@
       <a href="https://44dubs.bandcamp.com/" rel="noopener noreferrer external"><img src="logo.svg" alt="44dubs Logo" class="centered-image" loading="lazy"></a>
       <script>
          !(function () {
-          var e = document.getElementById("video-background"),
-              o = document.getElementById("background-audio");
+          var v = document.getElementById("video-background"),
+              a = document.getElementById("background-audio");
           function n() {
-              e.canPlayType("video/mp4; codecs=av01.0.05M.08") && (e.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">'),
-                  e.load(),
-                  e.play().catch(function (e) {
-                      console.log("Video auto-play was prevented:", e);
+              v.canPlayType("video/mp4; codecs=av01.0.05M.08") && (v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">'),
+                  v.load(),
+                  v.play().catch(function (v) {
+                      console.log("Video auto-play was prevented:", v);
                   }),
-                  o.canPlayType("audio/ogg; codecs=opus") && (o.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">'),
-                  o.load(),
-                  o.play().catch(function (e) {
-                     window.addEventListener("DOMContentLoaded", event => {
-                        const audio = document.querySelector("audio");
-                                   audio.volume = 0.2;
-                                   audio.play();
-                                });
+                  a.canPlayType("audio/ogg; codecs=opus") && (a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">'),
+                  a.volume=.2,
+                  a.load(),
+                  a.play().catch(function (v) {
+                     console.log("Audio auto-play was prevented:", v);
                   });
           }
           "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", n) : n();
