@@ -44,13 +44,12 @@
                   o.canPlayType("audio/ogg; codecs=opus") && (o.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">'),
                   o.load(),
                   o.play().catch(function (e) {
-                      console.log("Audio auto-play was prevented:", e);
+                     window.addEventListener("DOMContentLoaded", event => {
+                        const audio = document.querySelector("audio");
+                                   audio.volume = 0.2;
+                                   audio.play();
+                                });
                   });
-          window.addEventListener("DOMContentLoaded", event => {
-              const audio = document.querySelector("audio");
-              audio.volume = 0.2;
-              audio.play();
-         });
           }
           "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", n) : n();
          })();
