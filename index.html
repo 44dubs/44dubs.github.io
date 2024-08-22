@@ -117,14 +117,10 @@
 
             function n() {
                 if (v.canPlayType) {
-                    // Set video source if codec is supported
                     if (v.canPlayType("video/mp4; codecs=av01.0.05M.08")) {
                         v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">';
                     }
-
                     v.load();
-
-                    // Play the video and set it to a random start time
                     v.addEventListener('loadedmetadata', function() {
                         var randomTime = Math.random() * v.duration;
                         v.currentTime = randomTime;
@@ -138,24 +134,18 @@
                 } else {
                     useGifFallback();
                 }
-
-                // Set audio source if codec is supported
                 if (a.canPlayType("audio/ogg; codecs=opus")) {
                     a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">';
                 }
                 a.volume = 0.2;
                 a.load();
             }
-
-            // Audio button click event
             b.addEventListener("click", function() {
                 a.play().catch(function (e) {
                     console.log("Audio play was prevented:", e);
                 });
                 b.style.display = 'none';
             });
-
-            // Check if the document is loading and execute the function
             if ("loading" === document.readyState) {
                 document.addEventListener("DOMContentLoaded", n);
             } else {
