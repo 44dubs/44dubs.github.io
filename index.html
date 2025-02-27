@@ -1,157 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="44dubs">
-      <meta name="description" content="UKG and Jungle tunes straight from the underground.">
-      <meta name="keywords" content="44, 44dubs, 44dub, dubs, dub, record label, ukg, uk garage, jungle, record, bandcamp">
-      <meta name="author" content="44dubs">
-      <meta property="og:type" content="website">
-      <meta property="og:title" content="44dubs">
-      <meta property="og:description" content="UKG and Jungle tunes straight from the underground.">
-      <meta property="og:image" content="cover.jpg">
-      <meta property="og:url" content="https://44dubs.github.io/">
-      <meta property="twitter:card" content="summary_large_image">
-      <meta property="twitter:url" content="https://44dubs.github.io/">
-      <meta property="twitter:title" content="44dubs">
-      <meta property="twitter:description" content="UKG and Jungle tunes straight from the underground.">
-      <meta property="twitter:image" content="cover.jpg">
-      <meta itemprop="name" content="44dubs">
-      <meta itemprop="description" content="UKG and Jungle tunes straight from the underground.">
-      <link rel="canonical" href="https://44dubs.github.io/">
-      <link rel="icon" type="image/x-icon" href="icon.ico">
-      <title>44dubs</title>
-      <style>
-         body,
-         html {
-         margin: 0;
-         padding: 0;
-         height: 100%;
-         overflow: hidden;
-         }
-         #video-background, #gif-background {
-         position: fixed;
-         right: 0;
-         bottom: 0;
-         min-width: 100%;
-         min-height: 100%;
-         width: 100%;
-         height: 100%;
-         z-index: -2;
-         object-fit: cover;
-         display: none;
-         }
-         .dot-overlay {
-         position: fixed;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-         background-image: radial-gradient(circle, #000 1px, transparent 1px);
-         background-size: 3px 3px;
-         opacity: 0.3;
-         z-index: -1;
-         }
-         .centered-image {
-         position: absolute;
-         top: 50%;
-         left: 50%;
-         transform: translate(-50%, -50%);
-         max-width: 50%;
-         max-height: 50%;
-         width: auto;
-         height: auto;
-         }
-         #audio-button {
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 10vw;
-         height: 10vw;
-         max-width: 100px;
-         max-height: 100px;
-         min-width: 80px;
-         min-height: 80px;
-         background: rgba(0, 0, 0, 0.3);
-         border: none;
-         outline: none;
-         z-index: 10;
-         cursor: pointer;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         transition: opacity 0.1s ease;
-         }
-         #audio-button img {
-         width: 70%;
-         height: 70%;
-         }
-         #audio-button:active {
-         opacity: 0;
-         }
-      </style>
-   </head>
-   <body>
-      <video id="video-background" loop muted playsinline preload="auto">
-         <source src="background_fallback.mp4" type="video/mp4">
-      </video>
-      <img id="gif-background" src="background_fallback.gif" alt="Background GIF">
-      <audio id="background-audio" loop preload="auto">
-         <source src="background_audio.mp3" type="audio/mpeg">
-      </audio>
-      <div class="dot-overlay"></div>
-      <a href="https://music.44dubs.com/" rel="noopener noreferrer external"><img src="logo.svg" alt="44dubs Logo" class="centered-image" loading="lazy"></a>
-      <button id="audio-button"><img src="speaker_icon.svg" alt="Play Audio"></button>
-      <script async>
-         !(function () {
-            var v = document.getElementById("video-background"),
-                g = document.getElementById("gif-background"),
-                a = document.getElementById("background-audio"),
-                b = document.getElementById("audio-button");
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="44dubs">
+  <meta name="description" content="UKG and Jungle tunes straight from the underground.">
+  <meta name="keywords" content="44, 44dubs, 44dub, dubs, dub, record label, ukg, uk garage, jungle, record, bandcamp">
+  <meta name="author" content="44dubs">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="44dubs">
+  <meta property="og:description" content="UKG and Jungle tunes straight from the underground.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/44dubs/44dubs.github.io/refs/heads/main/cover.jpg">
+  <meta property="og:url" content="https://44dubs.github.io/">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://44dubs.github.io/">
+  <meta property="twitter:title" content="44dubs">
+  <meta property="twitter:description" content="UKG and Jungle tunes straight from the underground.">
+  <meta property="twitter:image" content="https://raw.githubusercontent.com/44dubs/44dubs.github.io/refs/heads/main/cover.jpg">
+  <meta itemprop="name" content="44dubs">
+  <meta itemprop="description" content="UKG and Jungle tunes straight from the underground.">
+  <link rel="canonical" href="https://44dubs.github.io/">
+  <link rel="icon" type="image/x-icon" href="icon.ico">
+  <title>44dubs</title>
+  
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="logo.svg" as="image" fetchpriority="high">
+  <link rel="icon" href="icon.ico">
+  
+  <!-- Font with display swap for better performance -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <style>
+    :root {
+      --primary-bg: #000000;
+      --primary-text: #ffffff;
+      --input-bg: #ffffff;
+      --input-text: #000000;
+    }
 
-            function useGifFallback() {
-                v.style.display = 'none';
-                g.style.display = 'block';
-            }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      scroll-behavior: smooth;
+      font-family: 'Space Mono', monospace;
+    }
 
-            function n() {
-                if (v.canPlayType) {
-                    if (v.canPlayType("video/mp4; codecs=av01.0.05M.08")) {
-                        v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">';
-                    }
-                    v.load();
-                    v.addEventListener('loadedmetadata', function() {
-                        var randomTime = Math.random() * v.duration;
-                        v.currentTime = randomTime;
-                        v.play().catch(function (e) {
-                            console.log("Video auto-play was prevented:", e);
-                            useGifFallback();
-                        });
-                    });
+    body.releases-open {
+      overflow-y: auto;
+      height: auto;
+    }
 
-                    v.style.display = 'block';
-                } else {
-                    useGifFallback();
-                }
-                if (a.canPlayType("audio/ogg; codecs=opus")) {
-                    a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">';
-                }
-                a.volume = 0.2;
-                a.load();
-            }
-            b.addEventListener("click", function() {
-                a.play().catch(function (e) {
-                    console.log("Audio play was prevented:", e);
-                });
-                b.style.display = 'none';
+    .main-content {
+      height: 100vh;
+      position: relative;
+    }
+
+    #video-background, #gif-background {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      object-fit: cover;
+      display: none;
+    }
+
+    .dot-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, #000 1px, transparent 1px);
+      background-size: 3px 3px;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .centered-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 50%;
+      max-height: 50%;
+      min-width: 200px;
+    }
+
+    .control-btn {
+      position: fixed;
+      width: 10vw;
+      height: 10vw;
+      max-width: 100px;
+      max-height: 100px;
+      min-width: 80px;
+      min-height: 80px;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      z-index: 10;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .control-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .control-btn img {
+      width: 60%;
+      height: 60%;
+      filter: brightness(0) invert(1);
+    }
+
+    #audio-button { top: 0; left: 0; }
+    #releases-button { bottom: 0; left: 0; }
+    #releases-submit-button { bottom: 0; right: 0; }
+
+    .releases-section {
+      min-height: 100vh;
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      padding: 2rem 1rem 6rem;
+    }
+
+    .releases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .release-card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--primary-text);
+      transition: transform 0.3s ease;
+    }
+
+    .release-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .release-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 20;
+      overflow-y: auto;
+    }
+
+    .modal.active { opacity: 1; }
+
+    .modal-content {
+      position: relative;
+      background: var(--primary-bg);
+      width: 90%;
+      max-width: 550px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-header img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--primary-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      color: white;
+    }
+
+    .form-group input, .form-group textarea {
+      padding: 0.8rem;
+      background: var(--input-bg);
+      border: none;
+      color: var(--input-text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-form-button {
+      padding: 1rem;
+      background: var(--primary-text);
+      color: var(--primary-bg);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: inherit;
+      letter-spacing: 1px;
+    }
+
+    .success-message {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary-text);
+      color: var(--primary-bg);
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      display: none;
+      z-index: 30;
+    }
+
+    @media (max-width: 480px) {
+      .modal-header img { max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <video id="video-background" loop muted playsinline preload="none">
+      <!-- Sources will be added via JS -->
+    </video>
+    <img id="gif-background" src="background_fallback.gif" alt="" loading="lazy">
+    <audio id="background-audio" loop preload="none">
+      <!-- Sources will be added via JS -->
+    </audio>
+    <div class="dot-overlay"></div>
+    <a href="https://music.44dubs.com/">
+      <img src="logo.svg" alt="44dubs Logo" class="centered-image" fetchpriority="high">
+    </a>
+    <button id="audio-button" class="control-btn" aria-label="Toggle Audio">
+      <img src="off.svg" alt="" class="muted">
+    </button>
+    <button id="releases-button" class="control-btn" aria-label="View Releases">
+      <img src="list.svg" alt="">
+    </button>
+  </div>
+
+  <section class="releases-section" id="releases">
+    <div class="releases-grid"></div>
+    <button id="releases-submit-button" class="control-btn" aria-label="Submit Dub">
+      <img src="plus.svg" alt="">
+    </button>
+  </section>
+
+  <div class="modal" id="submissionModal">
+    <div class="modal-content">
+      <button class="close-button" aria-label="Close">&times;</button>
+      <div class="modal-header">
+        <img src="dubs.gif" alt="44dubs submission header" loading="lazy">
+      </div>
+      <form name="dub-submission" method="POST" data-netlify="true" id="dubSubmissionForm">
+        <input type="hidden" name="form-name" value="dub-submission">
+        <div class="form-group">
+          <label for="artistName">ARTIST NAME *</label>
+          <input type="text" id="artistName" name="artistName" required>
+        </div>
+        <div class="form-group">
+          <label for="email">EMAIL *</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="Link">LINK *</label>
+          <input type="url" id="Link" name="Link" placeholder="Soundcloud, dropbox, google drive, etc." required>
+        </div>
+        <div class="form-group">
+          <label for="description">TRACK DESCRIPTION</label>
+          <textarea id="description" name="description" placeholder="Tell us about your track..."></textarea>
+        </div>
+        <button type="submit" class="submit-form-button">SUBMIT</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="success-message" id="successMessage">
+    Submission received
+  </div>
+
+  <script>
+    // Defer execution until page content is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      const v = document.getElementById("video-background");
+      const g = document.getElementById("gif-background");
+      const a = document.getElementById("background-audio");
+      const b = document.getElementById("audio-button");
+      const modal = document.getElementById("submissionModal");
+      const releasesSubmitBtn = document.getElementById("releases-submit-button");
+      const releasesBtn = document.getElementById("releases-button");
+      const releasesSection = document.getElementById("releases");
+      const closeBtn = document.querySelector(".close-button");
+      const form = document.getElementById("dubSubmissionForm");
+      const successMessage = document.getElementById("successMessage");
+      const releasesBtnIcon = releasesBtn.querySelector('img');
+      
+      // Releases data - moved here to avoid redundant DOM operations
+      const releases = [
+        {
+          title: "FFF002",
+          artist: "???",
+          image: "generic.webp",
+          date: "2025",
+          url: "#"
+        },
+        {
+          title: "FFD002",
+          artist: "Jamma",
+          image: "generic.webp",
+          date: "2025",
+          url: "#"
+        },
+        {
+          title: "FFF001",
+          artist: "Juno Super",
+          image: "./fff001.webp",
+          date: "30.01.2025",
+          url: "https://junosuper.bandcamp.com/album/it-takes-two-beat-circuit"
+        },
+        {
+          title: "FFD001",
+          artist: "TMP",
+          image: "./ffd001.webp",
+          date: "07.11.2024",
+          url: "https://djtmp.bandcamp.com/album/if-we-shella-verse"
+        }
+      ];
+      
+      let isInReleasesView = false;
+
+      // Initialize background media and set up event handlers
+      function initMedia() {
+        // Set up video with appropriate source based on browser support
+        if (v.canPlayType) {
+          if (v.canPlayType("video/mp4; codecs=av01.0.05M.08")) {
+            v.innerHTML = '<source src="background_av1.mp4" type="video/mp4; codecs=av01.0.05M.08">';
+          } else {
+            v.innerHTML = '<source src="background_fallback.mp4" type="video/mp4">';
+          }
+          
+          v.addEventListener('loadedmetadata', function() {
+            const randomTime = Math.random() * v.duration;
+            v.currentTime = randomTime;
+            v.play().catch(() => useGifFallback());
+          });
+          
+          v.style.display = 'block';
+          v.load();
+        } else {
+          useGifFallback();
+        }
+        
+        // Set up audio with appropriate source based on browser support
+        if (a.canPlayType("audio/ogg; codecs=opus")) {
+          a.innerHTML = '<source src="background_audio.opus" type="audio/ogg; codecs=opus">';
+        } else {
+          a.innerHTML = '<source src="background_audio.mp3" type="audio/mpeg">';
+        }
+        
+        a.volume = 0.2;
+        a.load();
+      }
+      
+      function useGifFallback() {
+        v.style.display = 'none';
+        g.style.display = 'block';
+      }
+      
+      // Toggle audio playback
+      b.addEventListener("click", function() {
+        if (a.paused) {
+          a.play().catch(() => {});
+          b.querySelector('img').src = 'on.svg';
+          b.querySelector('img').classList.remove('muted');
+        } else {
+          a.pause();
+          b.querySelector('img').src = 'off.svg';
+          b.querySelector('img').classList.add('muted');
+        }
+      });
+      
+      // Handle submission modal
+      releasesSubmitBtn.addEventListener("click", function() {
+        modal.style.display = 'block';
+        setTimeout(() => modal.classList.add('active'), 10);
+        document.body.style.overflow = 'hidden';
+      });
+      
+      function closeModal() {
+        modal.classList.remove('active');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }, 300);
+      }
+      
+      closeBtn.addEventListener("click", closeModal);
+      
+      window.addEventListener("click", function(event) {
+        if (event.target === modal) closeModal();
+      });
+      
+      // Handle form submission with Netlify
+      form.addEventListener("submit", function(e) {
+        // Allow form to submit to Netlify
+        closeModal();
+        // Show success message briefly before page navigates
+        successMessage.style.display = 'block';
+      });
+      
+      // Handle releases view toggle
+      releasesBtn.addEventListener("click", function() {
+        if (window.innerWidth <= 768) {
+          window.location.href = "https://44dubs.bandcamp.com/music";
+          return;
+        }
+        
+        if (!isInReleasesView) {
+          document.body.classList.add('releases-open');
+          releasesSection.scrollIntoView({ behavior: 'smooth' });
+          
+          const releasesGrid = document.querySelector('.releases-grid');
+          if (!releasesGrid.children.length) {
+            const fragment = document.createDocumentFragment();
+            
+            releases.forEach(release => {
+              const card = document.createElement('a');
+              card.href = release.url;
+              card.className = 'release-card';
+              card.target = '_blank';
+              
+              const img = document.createElement('img');
+              img.src = release.image;
+              img.alt = release.title;
+              img.loading = 'lazy';
+              
+              const info = document.createElement('div');
+              
+              const title = document.createElement('h3');
+              title.textContent = release.title;
+              
+              const artist = document.createElement('p');
+              artist.textContent = release.artist;
+              
+              const date = document.createElement('p');
+              date.textContent = release.date;
+              
+              info.append(title, artist, date);
+              card.append(img, info);
+              fragment.appendChild(card);
             });
-            if ("loading" === document.readyState) {
-                document.addEventListener("DOMContentLoaded", n);
-            } else {
-                n();
-            }
-         })();
-      </script>
-   </body>
+            
+            releasesGrid.appendChild(fragment);
+          }
+          
+          setTimeout(() => {
+            releasesBtnIcon.src = 'top.svg';
+            releasesBtnIcon.alt = 'Back to top';
+            b.style.opacity = '0';
+            isInReleasesView = true;
+          }, 300);
+        } else {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          
+          setTimeout(() => {
+            releasesBtnIcon.src = 'list.svg';
+            releasesBtnIcon.alt = 'View Releases';
+            b.style.opacity = '1';
+            document.body.classList.remove('releases-open');
+            isInReleasesView = false;
+          }, 500);
+        }
+      });
+      
+      // Initialize media
+      initMedia();
+    });
+  </script>
+</body>
 </html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Submit your tracks to 44dubs">
+  <title>44dubs - Submit</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <style>
+    :root {
+      --primary-bg: #000000;
+      --primary-text: #ffffff;
+      --input-bg: #ffffff;
+      --input-text: #000000;
+    }
+
+    * {
+      font-family: 'Space Mono', monospace;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 10;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .back-button:hover {
+      transform: translateX(-5px);
+    }
+
+    .arrow-icon {
+      width: 40px;
+      height: 40px;
+      stroke: var(--primary-text);
+      stroke-width: 3;
+    }
+
+    .submission-container {
+      max-width: 800px;
+      width: 90%;
+      margin: 4rem auto;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header img {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .submission-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 0.5s ease forwards;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+    .form-group label {
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 0.8rem;
+      background: var(--input-bg);
+      border: none;
+      color: var(--input-text);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      padding: 1rem;
+      background: var(--primary-text);
+      color: var(--primary-bg);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 0.5s ease 0.5s forwards;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .success-message {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary-text);
+      color: var(--primary-bg);
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      display: none;
+      animation: successPop 0.5s ease forwards;
+    }
+
+    @keyframes successPop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .submission-container {
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="./index.html" class="back-button" aria-label="Back to main site">
+    <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <main class="submission-container">
+    <header class="header">
+      <img src="dubs.gif" alt="44dubs submission header" width="400" height="150" loading="lazy">
+    </header>
+
+    <form class="submission-form" name="dub-submission" method="POST" data-netlify="true" id="dubSubmissionForm">
+      <input type="hidden" name="form-name" value="dub-submission">
+      <div class="form-group">
+        <label for="artistName">ARTIST NAME *</label>
+        <input type="text" id="artistName" name="artistName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">EMAIL *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="Link">LINK *</label>
+        <input type="url" id="Link" name="Link" placeholder="Soundcloud, dropbox, google drive, etc." required>
+      </div>
+      <div class="form-group">
+        <label for="description">TRACK DESCRIPTION</label>
+        <textarea id="description" name="description" placeholder="Tell us about your track..."></textarea>
+      </div>
+      <button type="submit" class="submit-button">SUBMIT</button>
+    </form>
+  </main>
+
+  <div class="success-message" id="successMessage" role="alert">
+    Submission received
+  </div>
+
+  <script>
+    // Wait for DOM to fully load
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('dubSubmissionForm');
+      const successMessage = document.getElementById('successMessage');
+
+      // Apply Netlify form handling
+      form.addEventListener('submit', (e) => {
+        // Show success message before form submits (Netlify will handle the actual submission)
+        successMessage.style.display = 'block';
+        
+        // We don't call e.preventDefault() to allow the form to submit to Netlify
+        
+        // If you're testing locally and want to prevent actual submission, uncomment:
+        // e.preventDefault();
+        // form.reset();
+        // setTimeout(() => { successMessage.style.display = 'none'; }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
